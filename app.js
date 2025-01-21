@@ -31,6 +31,56 @@ function getHumanChoice() {
     userString = prompt("Choose your object: rock, paper, or scissors.");
     userString = userString.toLowerCase();
   }
+  return userString;
 }
 
+function playRound() {
+    let humanChoice = getHumanChoice();
+    let computerChoice = getComputerChoice();
+  
+    //   These human-readable strings represent a win/tie/loss from the perspective of the user.
+    let winString = `You won, ${humanChoice} beats ${computerChoice}!`;
+    let tieString = `There was a tie, you and the computer both chose ${humanChoice}.`;
+    let lossString = `You lost, ${computerChoice} beats ${humanChoice}!`;
+  
+    let displayString;
+    if (humanChoice === computerChoice) {
+      displayString = tieString;
+    } else {
+      displayString = didPlayerOneWin(humanChoice, computerChoice)
+        ? winString
+        : lossString;
+    }
+  
+    console.log(displayString);
+  }
+  
+  function didPlayerOneWin(choice1, choice2) {
+    switch (choice1) {
+      case ROCK:
+        if (choice2 === SCISSORS) {
+          return true;
+        } else if (choice2 === PAPER) {
+          return false;
+        }
+        break;
+      case PAPER:
+        if (choice2 === SCISSORS) {
+          return false;
+        } else if (choice2 === ROCK) {
+          return true;
+        }
+        break;
+      case SCISSORS:
+        if (choice2 === ROCK) {
+          return false;
+        } else if (choice2 === PAPER) {
+          return true;
+        }
+        break;
+    }
+    throw new Error("Internal error: choice invalid when selecting winner.");
+  }
+  
+  playRound();
 
