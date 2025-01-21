@@ -1,11 +1,8 @@
 "use strict";
 
-let humanScore = 0;
-let computerScore = 0;
-
-let ROCK = "rock"
-let PAPER = "paper"
-let SCISSORS = "scissors"
+let ROCK = "rock";
+let PAPER = "paper";
+let SCISSORS = "scissors";
 
 function getComputerChoice() {
   let choice = Math.floor(Math.random() * 300) % 3;
@@ -34,57 +31,74 @@ function getHumanChoice() {
   return userString;
 }
 
-function playRound() {
-    let humanChoice = getHumanChoice();
-    let computerChoice = getComputerChoice();
-  
-    //   These human-readable strings represent a win/tie/loss from the perspective of the user.
-    let winString = `You won, ${humanChoice} beats ${computerChoice}!`;
-    let tieString = `There was a tie, you and the computer both chose ${humanChoice}.`;
-    let lossString = `You lost, ${computerChoice} beats ${humanChoice}!`;
-  
-    let displayString;
-    if (humanChoice === computerChoice) {
-        console.log(tieString);
-        return;
-    } 
-    
-      if (didPlayerOneWin(humanChoice, computerChoice)){
-        console.log(winString);
-        humanScore++;
-      } else {
-        console.log(lossString);
-        computerScore++;
-      }  
-  
+function didPlayerOneWin(choice1, choice2) {
+  switch (choice1) {
+    case ROCK:
+      if (choice2 === SCISSORS) {
+        return true;
+      } else if (choice2 === PAPER) {
+        return false;
       }
-  
-  function didPlayerOneWin(choice1, choice2) {
-    switch (choice1) {
-      case ROCK:
-        if (choice2 === SCISSORS) {
-          return true;
-        } else if (choice2 === PAPER) {
-          return false;
-        }
-        break;
-      case PAPER:
-        if (choice2 === SCISSORS) {
-          return false;
-        } else if (choice2 === ROCK) {
-          return true;
-        }
-        break;
-      case SCISSORS:
-        if (choice2 === ROCK) {
-          return false;
-        } else if (choice2 === PAPER) {
-          return true;
-        }
-        break;
-    }
-    throw new Error("Internal error: choice invalid when selecting winner.");
+      break;
+    case PAPER:
+      if (choice2 === SCISSORS) {
+        return false;
+      } else if (choice2 === ROCK) {
+        return true;
+      }
+      break;
+    case SCISSORS:
+      if (choice2 === ROCK) {
+        return false;
+      } else if (choice2 === PAPER) {
+        return true;
+      }
+      break;
   }
-  
-  playRound();
+  throw new Error("Internal error: choice invalid when selecting winner.");
+}
 
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+
+    console.log("Welcome to the game. You will play five rounds.")
+
+    for (let i = 0; i < 5; i++) {
+        playRound();
+    }
+
+    if (humanScore > computerScore) {
+        console.log("You won the game!");
+    } else if (humanScore < computerScore) {
+        console.log("You lost the game.");
+    }
+    console.log("Thanks for playing.");
+
+
+    function playRound() {
+        let humanChoice = getHumanChoice();
+        let computerChoice = getComputerChoice();
+      
+        //   These human-readable strings represent a win/tie/loss from the perspective of the user.
+        let winString = `You won, ${humanChoice} beats ${computerChoice}!`;
+        let tieString = `There was a tie, you and the computer both chose ${humanChoice}.`;
+        let lossString = `You lost, ${computerChoice} beats ${humanChoice}!`;
+      
+        let displayString;
+        if (humanChoice === computerChoice) {
+          console.log(tieString);
+          return;
+        }
+      
+        if (didPlayerOneWin(humanChoice, computerChoice)) {
+          console.log(winString);
+          humanScore++;
+        } else {
+          console.log(lossString);
+          computerScore++;
+        }
+      }
+}
+
+playGame();
