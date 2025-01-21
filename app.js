@@ -45,15 +45,19 @@ function playRound() {
   
     let displayString;
     if (humanChoice === computerChoice) {
-      displayString = tieString;
-    } else {
-      displayString = didPlayerOneWin(humanChoice, computerChoice)
-        ? winString
-        : lossString;
-    }
+        console.log(tieString);
+        return;
+    } 
+    
+      if (didPlayerOneWin(humanChoice, computerChoice)){
+        console.log(winString);
+        humanScore++;
+      } else {
+        console.log(lossString);
+        computerScore++;
+      }  
   
-    console.log(displayString);
-  }
+      }
   
   function didPlayerOneWin(choice1, choice2) {
     switch (choice1) {
