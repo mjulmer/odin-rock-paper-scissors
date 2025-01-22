@@ -59,46 +59,42 @@ function didPlayerOneWin(choice1, choice2) {
 }
 
 function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
+  let humanScore = 0;
+  let computerScore = 0;
 
-    console.log("Welcome to the game. You will play five rounds.")
+  if (humanScore > computerScore) {
+    console.log("You won the game!");
+  } else if (humanScore < computerScore) {
+    console.log("You lost the game.");
+  }
+  console.log("Thanks for playing.");
 
-    for (let i = 0; i < 5; i++) {
-        playRound();
+  // TODO(mulmer): Change status-text to "You are on round X" once the game starts.
+  // TODO(mulmer): Add div for current store below button containers.
+
+  function playRound() {
+    let humanChoice = getHumanChoice();
+    let computerChoice = getComputerChoice();
+
+    //   These human-readable strings represent a win/tie/loss from the perspective of the user.
+    let winString = `You won, ${humanChoice} beats ${computerChoice}!`;
+    let tieString = `There was a tie, you and the computer both chose ${humanChoice}.`;
+    let lossString = `You lost, ${computerChoice} beats ${humanChoice}!`;
+
+    let displayString;
+    if (humanChoice === computerChoice) {
+      console.log(tieString);
+      return;
     }
 
-    if (humanScore > computerScore) {
-        console.log("You won the game!");
-    } else if (humanScore < computerScore) {
-        console.log("You lost the game.");
+    if (didPlayerOneWin(humanChoice, computerChoice)) {
+      console.log(winString);
+      humanScore++;
+    } else {
+      console.log(lossString);
+      computerScore++;
     }
-    console.log("Thanks for playing.");
-
-
-    function playRound() {
-        let humanChoice = getHumanChoice();
-        let computerChoice = getComputerChoice();
-      
-        //   These human-readable strings represent a win/tie/loss from the perspective of the user.
-        let winString = `You won, ${humanChoice} beats ${computerChoice}!`;
-        let tieString = `There was a tie, you and the computer both chose ${humanChoice}.`;
-        let lossString = `You lost, ${computerChoice} beats ${humanChoice}!`;
-      
-        let displayString;
-        if (humanChoice === computerChoice) {
-          console.log(tieString);
-          return;
-        }
-      
-        if (didPlayerOneWin(humanChoice, computerChoice)) {
-          console.log(winString);
-          humanScore++;
-        } else {
-          console.log(lossString);
-          computerScore++;
-        }
-      }
+  }
 }
 
 playGame();
