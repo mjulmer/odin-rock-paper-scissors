@@ -71,38 +71,27 @@ function playGame() {
 
   const buttons = document.querySelector(".button-container");
   buttons.addEventListener("click", (event) => {
-    playRound(event.target.className);
-    updateUi(event.target);
+    playRoundAndUpdateUi(event.target.className);
   });
 
-  // TODO(mulmer): Change status-text to "You are on round X" once the game starts.
-  // TODO(mulmer): Add div for current store below button containers.
-
-  function playRound(humanChoice) {
+  function playRoundAndUpdateUi(humanChoice) {
     let computerChoice = getComputerChoice();
 
-    //   These human-readable strings represent a win/tie/loss from the perspective of the user.
-    let winString = `You won, ${humanChoice} beats ${computerChoice}!`;
-    let tieString = `There was a tie, you and the computer both chose ${humanChoice}.`;
-    let lossString = `You lost, ${computerChoice} beats ${humanChoice}!`;
-
-    let displayString;
+    const roundResultDisplay = document.querySelector(".round-result");
     if (humanChoice === computerChoice) {
-      console.log(tieString);
-      return;
-    }
-
-    if (didPlayerOneWin(humanChoice, computerChoice)) {
-      console.log(winString);
+      roundResultDisplay.textContent = `There was a tie, you and the computer both chose ${humanChoice}.`;
+    } else if (didPlayerOneWin(humanChoice, computerChoice)) {
+      roundResultDisplay.textContent = `You won, ${humanChoice} beats ${computerChoice}!`;
       humanScore++;
     } else {
-      console.log(lossString);
+      roundResultDisplay.textContent = `You lost, ${computerChoice} beats ${humanChoice}!`;
       computerScore++;
     }
-  }
 
-  function updateUi(target) {
-    // TODO(mulmer): Implement.
+    // TODO(mulmer): Set this correctly after re-introducing rounds.
+    let roundNumber = 1;
+    const currentScoreDisplay = document.querySelector(".current-score");
+    currentScoreDisplay.textContent = `You're on round ${roundNumber}. The current score is ${humanScore}:${computerScore}.`;
   }
 }
 
