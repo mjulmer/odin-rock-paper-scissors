@@ -18,19 +18,6 @@ function getComputerChoice() {
   }
 }
 
-function getHumanChoice() {
-  let userString;
-  while (
-    userString !== ROCK &&
-    userString !== PAPER &&
-    userString !== SCISSORS
-  ) {
-    userString = prompt("Choose your object: rock, paper, or scissors.");
-    userString = userString.toLowerCase();
-  }
-  return userString;
-}
-
 function didPlayerOneWin(choice1, choice2) {
   switch (choice1) {
     case ROCK:
@@ -61,6 +48,7 @@ function didPlayerOneWin(choice1, choice2) {
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
+  roundNumber = 0;
 
   if (humanScore > computerScore) {
     console.log("You won the game!");
@@ -88,8 +76,7 @@ function playGame() {
       computerScore++;
     }
 
-    // TODO(mulmer): Set this correctly after re-introducing rounds.
-    let roundNumber = 1;
+    roundNumber += 1;
     const currentScoreDisplay = document.querySelector(".current-score");
     currentScoreDisplay.textContent = `You're on round ${roundNumber}. The current score is ${humanScore}:${computerScore}.`;
   }
