@@ -69,11 +69,16 @@ function playGame() {
   }
   console.log("Thanks for playing.");
 
+  const buttons = document.querySelector(".button-container");
+  buttons.addEventListener("click", (event) => {
+    playRound(event.target.className);
+    updateUi(event.target);
+  });
+
   // TODO(mulmer): Change status-text to "You are on round X" once the game starts.
   // TODO(mulmer): Add div for current store below button containers.
 
-  function playRound() {
-    let humanChoice = getHumanChoice();
+  function playRound(humanChoice) {
     let computerChoice = getComputerChoice();
 
     //   These human-readable strings represent a win/tie/loss from the perspective of the user.
@@ -94,6 +99,10 @@ function playGame() {
       console.log(lossString);
       computerScore++;
     }
+  }
+
+  function updateUi(target) {
+    // TODO(mulmer): Implement.
   }
 }
 
