@@ -48,14 +48,7 @@ function didPlayerOneWin(choice1, choice2) {
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
-  roundNumber = 0;
-
-  if (humanScore > computerScore) {
-    console.log("You won the game!");
-  } else if (humanScore < computerScore) {
-    console.log("You lost the game.");
-  }
-  console.log("Thanks for playing.");
+  let roundNumber = 0;
 
   const buttons = document.querySelector(".button-container");
   buttons.addEventListener("click", (event) => {
@@ -79,6 +72,26 @@ function playGame() {
     roundNumber += 1;
     const currentScoreDisplay = document.querySelector(".current-score");
     currentScoreDisplay.textContent = `You're on round ${roundNumber}. The current score is ${humanScore}:${computerScore}.`;
+
+    if (roundNumber == 5) {
+      endGame();
+    }
+  }
+
+  function endGame() {
+    buttons.remove();
+    document.querySelector(".intro-text").remove();
+    document.querySelector(".status-text").remove();
+
+    const finalStateDisplay = document.querySelector(".final-result");
+
+    if (humanScore > computerScore) {
+      finalStateDisplay.textContent = "You won the game!";
+    } else if (humanScore < computerScore) {
+      finalStateDisplay.textContent = "You lost the game.";
+    } else {
+      finalStateDisplay.textContent = "The final result was a tie.";
+    }
   }
 }
 
